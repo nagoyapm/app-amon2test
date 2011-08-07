@@ -5,7 +5,7 @@ use Amon2::Web::Dispatcher::Lite;
 
 any '/' => sub {
     my ($c) = @_;
-    $c->render('index.tt');
+    $c->render('index.tx');
 };
 
 1;

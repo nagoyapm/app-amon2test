@@ -1,5 +1,7 @@
-[% WRAPPER 'include/layout.tt' %]
+: cascade _base
 
+
+: around content -> {
 <hr class="space">
 
 <div class="span-15 colborder">
@@ -20,5 +22,4 @@
 </div>
 
 <hr class="space">
-
-[% END %]
+: }
