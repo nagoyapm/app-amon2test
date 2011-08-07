@@ -5,3 +5,9 @@ You can deploy
 
 <pre>
 $ dotcloud push &lt;Your application name&gt;</pre>
+
+Requred
+-------
+
+* MongoDB
+
