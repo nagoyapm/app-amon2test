@@ -23,10 +23,14 @@ sub _db {
         my $dbname = $conf->{database}
             or die "missing 'MongoDB.database'";
 
-        my $conn = MongoDB::Connection->new(
+        my %params_conn = (
             host => $conf->{host} || 'localhost',
             port => $conf->{port} || '27017',
         );
+        $params_conn{username} = $conf->{username}  if $conf->{username};
+        $params_conn{password} = $conf->{password}  if $conf->{password};
+
+        my $conn = MongoDB::Connection->new(%params_conn);
 
         $self->{db} = $conn->$dbname;
     }

@@ -2,6 +2,8 @@
     'MongoDB' => {
         host     => 'localhost',
         port     => '27017',
+        username => '',
+        password => '',
         database => 'nagoyapm_osc2011nagoya',
     },
 
