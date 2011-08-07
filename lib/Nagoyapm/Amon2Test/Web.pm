@@ -37,6 +37,7 @@ use Text::Xslate;
 # load plugins
 use HTTP::Session::Store::File;
 __PACKAGE__->load_plugins(
+    '+Nagoyapm::Amon2Test::Plugin::MongoDB',
     'Web::FillInFormLite',
     'Web::NoCache', # do not cache the dynamic content by default
     'Web::CSRFDefender',
