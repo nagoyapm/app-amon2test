@@ -1,0 +1,119 @@
+: cascade _base
+
+: around content -> {
+<h2>lleval WebAPI test</h2>
+
+<div id="lleval">
+  <div id="lleval-source">
+    <h3>Source</h3>
+
+    <form action="<: uri_for('/test/lleval') :>" method="post">
+      <textarea name="source"
+                style="width:100%;height:30em;"
+                >#!/usr/bin/perl
+use strict;
+use warnings;
+# use Furl;
+use LWP::UserAgent;
+use Module::CoreList;
+
+# my $ua = Furl->new(
+#     agent => 'Nagoyapm::Amon2Test/test',
+# );
+my $ua = LWP::UserAgent->new(
+     agent => 'Nagoyapm::Amon2Test/test',
+ );
+my $res = $ua->get('http://www.google.com/');
+warn $res->status_line;
+warn $res->code;
+print $res->content . "\n";
+
+print $] . "\n";
+#print join( "\n", Module::CoreList::find_modules );
+#print `corelist -v $]`;
+
+die 'foobar';
+__END__
+      </textarea>
+
+      <input type="submit" name="submit" value="eval" />
+    </form>
+  </div>
+
+  <div id="lleval-result">
+    <h3>Result</h3>
+
+    <div id="lleval-result-lang">
+      <h4>lang</h4>
+      <pre></pre>
+    </div>
+
+    <div id="lleval-result-stdout">
+      <h4>stdout</h4>
+      <pre></pre>
+    </div>
+
+    <div id="lleval-result-stderr">
+      <h4>sterr</h4>
+      <pre></pre>
+    </div>
+
+    <div id="lleval-result-error">
+      <h4>error</h4>
+      <pre></pre>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $('form').submit(function () {
+        return false;
+    });
+
+    $('#lleval-result-lang').hide();
+    $('#lleval-result-stdout').hide();
+    $('#lleval-result-stderr').hide();
+    $('#lleval-result-error').hide();
+
+
+    var $form = $('#lleval-source form');
+
+    $('input[type="submit"]', $form).click(function () {
+        //http://api.dan.co.jp/lleval.cgi?c=callback&s=%23!/usr/bin/perl%0d%0aprint%20%22foo%22
+        var ajax_params = {
+            url: 'http://api.dan.co.jp/lleval.cgi',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                //l: 'perl',
+                s: $('textarea[name="source"]', $form).val()
+            },
+            success: function (res, status, xhr) {
+                $('#lleval-result-lang').hide();
+                $('#lleval-result-stdout').hide();
+                $('#lleval-result-stderr').hide();
+                $('#lleval-result-error').hide();
+
+                // ok
+                if ( typeof res.error == 'undefined' ) {
+                    $('#lleval-result-lang  ').show().find('pre').text( res.lang );
+                    $('#lleval-result-stdout').show().find('pre').text( res.stdout );
+                    $('#lleval-result-stderr').show().find('pre').text( res.stderr );
+                }
+                // error
+                else {
+                    $('#lleval-result-error').show().find('pre').text( res.error );
+                }
+            },
+            error: function (xhr, status) {
+            }
+        };
+        $.ajax(ajax_params);
+
+        return false;
+    });
+
+});
+</script>
+: }

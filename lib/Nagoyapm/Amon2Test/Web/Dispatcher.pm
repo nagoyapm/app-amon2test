@@ -8,4 +8,11 @@ any '/' => sub {
     $c->render('index.tx');
 };
 
+
+get '/test/lleval' => sub {
+    my ($c) = @_;
+    $c->render('test/lleval.tx');
+};
+
+
 1;
