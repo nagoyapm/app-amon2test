@@ -9,12 +9,18 @@
     <meta name="format-detection" content="telephone=no" />
     <link href="<: uri_for('/static/css/blueprint/screen.css') :>" rel="stylesheet" type="text/css" media="screen" />
     <link href="<: uri_for('/static/css/blueprint/print.css') :>" rel="stylesheet" type="text/css" media="print" />
+
+    <link rel="stylesheet" href="<: uri_for('/static/css/common/form.css') :>" type="text/css" media="screen" />
+    <link rel="stylesheet" href="<: uri_for('/static/css/common/layout.css') :>" type="text/css" media="screen" />
+: block css -> {}
+
     <!--[if lt IE 8]><link rel="stylesheet" href="<: uri_for('/static/css/blueprint/ie.css') :>" type="text/css" media="screen, projection"><![endif]--> 
     <link href="<: uri_for('/static/css/main.css') :>" rel="stylesheet" type="text/css" media="screen" />
     <script src="<: uri_for('/static/js/jquery-1.6.2.min.js') :>"></script>
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+: block javascript -> {}
 </head>
 <body<: if ( $bodyID ) { :> class="<: $bodyID :>"<: } :>>
     <div class="container">

@@ -1,0 +1,28 @@
+#form {
+    width: 100%;
+}
+
+#form input.textbox-code {
+    padding: 5px 5px;
+    display: block;
+    width: 98%;
+    font-size: 150%;
+    font-family: monospace;
+}
+
+
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table thead th {
+    background: #d0d0d0;
+}
+
+table th,
+table td {
+    border: 1px solid #ababab;
+}

@@ -1,0 +1,31 @@
+: cascade _base
+
+: around content {
+
+<div>
+  <h3>code</h3>
+
+  <pre>
+    <: $data.code :>
+  </pre>
+</div>
+
+
+<div>
+  <h3>url</h3>
+
+  <input type="text"
+         class="textbox"
+         readonly="readonly"
+         value="<: $uri :>"
+         />
+</div>
+
+
+:#<div>
+:#  <h3>evaluate?</h3>
+:#</div>
+
+
+
+: }
