@@ -7,6 +7,7 @@ use Try::Tiny;
 use Nagoyapm::Amon2Test::Util;
 
 my @subs_test = qw/
+    new_oauth_consumer
     new_oid
 /;
 

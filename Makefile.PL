@@ -12,11 +12,12 @@ WriteMakefile(
         'HTML::FillInForm::Lite'          => '1.09',
         'Time::Piece'                     => '1.20',
         'MongoDB'                         => '0',
+        'OAuth::Lite'                     => '0',
     },
     MIN_PERL_VERSION => '5.008001',
     (-d 'xt' and $ENV{AUTOMATED_TESTING} || $ENV{RELEASE_TESTING}) ? (
         test => {
-            TESTS => 't/*.t xt/*.t',
+            TESTS => 't/*.t t/*/*.t t/*/*/*.t xt/*.t',
         },
     ) : (),
 );

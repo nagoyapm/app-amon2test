@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 
 use Smart::Args;
+use OAuth::Lite::Consumer;
 use MongoDB;
 
 
@@ -15,6 +16,32 @@ sub import {
         no strict 'refs';
         *{"$caller\::$f"} = \&$f;
     }
+}
+
+
+
+sub new_oauth_consumer {
+    args_pos (
+        my $conf => { isa => 'HashRef', default => +{} },
+        my $type => { isa => 'Str', default => '' },
+    );
+    my $ret;
+
+    #$conf = +{%{ ( $type ne ''  &&  defined $conf->{$type} ) ? $conf->{$type} : $conf }};
+    $conf = $conf->{$type}  if ( $type ne ''  &&  defined $conf->{$type} );
+
+    $ret = OAuth::Lite::Consumer->new(
+        map {
+            ( $_, $conf->{$_} );
+        } qw/consumer_key
+             consumer_secret
+             request_token_path
+             access_token_path
+             authorize_path
+            /,
+    );
+
+    return $ret;
 }
 
 
@@ -47,6 +74,10 @@ Nagoyapm::Amon2Test::Util -
 Nagoyapm::Amon2Test::Util is a ...
 
 =over 4
+
+=item $oauth_consumer = new_oauth_consumer( \%conf, $type )
+
+Returns OAuth::Lite::Consumer.
 
 =item $oid = new_oid( $oid_string )
 
