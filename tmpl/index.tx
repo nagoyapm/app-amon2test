@@ -15,6 +15,11 @@
 <div id="form">
   <h2>post your line</h2>
 
+:   if $err {
+  <div style="color: red;">error: <: $err :></div>
+:   }
+
+
   <form action="<: uri_for('/') :>" method="post">
     <table>
       <tbody>

@@ -30,8 +30,9 @@ get '/' => sub {
         coll_user => $db->user,
     };
 
-    $c->render('index.tx', $vars);
+    return render_top($c, $vars);
 };
+
 
 post '/' => sub {
     my ($c) = @_;
@@ -64,6 +65,16 @@ post '/' => sub {
             username => $username,
         });
     }
+
+
+    # validation
+    my $params = $c->req->parameters;
+    unless (is_valid($params)) {
+        my $err = 'invalidated';
+        $c->fillin_form($c->req);
+        return render_top($c, {err => $err});
+    }
+
 
 
     #
@@ -304,6 +315,33 @@ get '/logout' => sub {
 
     $c->redirect( $req->base );
 };
+
+
+
+
+
+sub is_valid {
+    my ($params) = @_;
+    my $required = [qw(username line)];
+    foreach my $name (@$required) {
+        unless (exists($params->{$name}) and not($params->{$name} eq q())) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+sub render_top {
+    my ($c, $params) = @_;
+    unless (defined $params and ref $params eq 'HASH') {
+        $params = {};
+    }
+    unless (exists($params->{data})) {
+        my $data = [reverse $c->db->foo->find->all];
+        $params->{data} = $data;
+    }
+    return $c->render('index.tx', $params);
+}
 
 
 
