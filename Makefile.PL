@@ -12,6 +12,7 @@ WriteMakefile(
         'HTML::FillInForm::Lite'          => '1.09',
         'Time::Piece'                     => '1.20',
         'MongoDB'                         => '0',
+        'HTML::FillInForm::Lite'          => '1.09',     # for Amon2::Plugin::HTML::FillInFormLite
     },
     MIN_PERL_VERSION => '5.008001',
     (-d 'xt' and $ENV{AUTOMATED_TESTING} || $ENV{RELEASE_TESTING}) ? (

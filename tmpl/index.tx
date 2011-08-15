@@ -1,24 +1,38 @@
 : cascade _base
 
-
 : around content -> {
 <hr class="space">
 
 <div class="span-15 colborder">
     <h1>Hello, Amon2 world!</h1>
 
+    <form action="/" method="post">
+    name: 
+    <input type="text" name="name" />
+    line: 
+    <input type="text" name="line" />
+    comment:
+    <input type="text" name="comment" />
+    <input type="submit" />
+    </form>
+
     <h2>For benchmarkers...</h2>
-    <p>If you want to benchmarking between Plack based web application frameworks, you should use <B>Amon2::Setup::Flavor::Minimum</B> instead.</p>
-    <p>You can use it as following one liner:</p>
-    <pre>% amon2-setup.pl --flavor Minimum Nagoyapm::Amon2Test</pre>
+  : for $data -> $d {
+    <div>
+     <span><: $d.name :></span> / 
+     <span><: $d.line :></span> / 
+     <span><: $d.comment :></span> /
+     <input type="button" value="eval" />
+    </div>
+  : }
+
 </div>
+
 <div class="span-8 last">
-    <p>Amon2 is right for you if ...</p>
-    <ul>
-    <li>You need exceptional performance.</li>
-    <li>You want a framework with a small footprint.</li>
-    <li>You want a framework that requires nearly zero configuration.</li>
-    </ul>
+<div><: $dump :></div>
+: if $err {
+<div style="color: red;">error: <: $err :></div>
+: }
 </div>
 
 <hr class="space">
