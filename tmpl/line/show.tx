@@ -6,8 +6,25 @@
   <h3>code</h3>
 
   <pre>
-    <: $data.code :>
+    <: $line_data.line :>
   </pre>
+
+
+  <h3>comment</h3>
+
+  <div>
+    <: $line_data.comment :>
+  </div>
+
+
+  <h3>user</h3>
+
+  <div>
+    <: $user_data.username :>
+
+    &nbsp;
+    <a href="<: uri_for('/user/'); $user_data._id :>">more this user's line...</a>
+  </div>
 </div>
 
 

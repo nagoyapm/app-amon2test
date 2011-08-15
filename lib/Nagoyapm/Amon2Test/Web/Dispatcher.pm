@@ -111,17 +111,25 @@ get '/line/{id}' => sub {
     my ($c, $args) = @_;
     my ($req, $db) = ($c->req, $c->db);
 
+    #
+    my $user;
+    if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
+        $user = $db->user->find_one({ token => $access_token->token });
+    };
+
+    #
     my $line_id = $args->{id};
-    my $data;
-
-    my $oid = new_oid($line_id);
-
-    $data = $db->line->find_one({ _id => $oid });
+    my ($line_data, $user_data);
+    my $line_oid = new_oid( $args->{id} );
+    $line_data = $db->line->find_one({ _id => $line_oid });
+    $user_data = $db->user->find_one({ _id => $line_data->{user} });
 
 
     my $vars = +{
-        uri  => $req->uri,
-        data => $data,
+        user      => $user,
+        line_data => $line_data,
+        user_data => $user_data,
+        uri       => $req->uri,
     };
 
 
