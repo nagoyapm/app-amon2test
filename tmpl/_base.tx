@@ -28,6 +28,20 @@
             <a href="<: uri_for('/') :>">Nagoyapm-Amon2Test</a>
         </header>
         <div id="main">
+
+<div>
+: if ( $user != nil ) {
+:   if ( $user.service_name == 'twitter' ) {
+  <img src="http://api.twitter.com/1/users/profile_image/<: $user.username :>.json?size=mini" />
+:   }
+  <b><: $user.username :></b>
+
+  <a href="<: uri_for('/') :>logout">ログアウト</a>
+: } else {
+  <a href="<: uri_for('/') :>oauth/login/twitter">Twitterでログイン</a>
+: }  # /if ( $user != nil )
+</div>
+
 : block content -> {}
         </div>
         <footer>

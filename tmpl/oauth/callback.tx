@@ -1,0 +1,23 @@
+: cascade _base
+
+: around content -> {
+<div>
+  <a href="<: uri_for('/') :>">top</a>
+  &nbsp;&gt;&nbsp;
+  oauth/callback
+</div>
+
+
+:   if $denied != nil {
+
+<h2>cancelled</h2>
+
+:   } else {
+
+<h2>aurhorized</h2>
+
+
+:   }  # /if $vars.denied.defined()
+
+
+: }
