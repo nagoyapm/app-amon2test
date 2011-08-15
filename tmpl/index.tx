@@ -9,18 +9,51 @@
   <form action="<: uri_for('/') :>" method="post">
 
     <input type="text"
-           name="code"
+           name="username"
+:   if ( $user ) {
+           value="<: $user.username :>"
+           readonly="readonly"
+           disabled="disabled"
+:   } else {
+           value=""
+:   }  # /if ( $user )
+           placeholder="your nickname"
+           class="textbox textbox-username"
+           />
+
+    <input type="text"
+           name="line"
            value=""
            placeholder="print 'hello, world!'"
-           class="textbox textbox-code"
+           class="textbox textbox-line"
+           />
+
+    <input type="text"
+           name="comment"
+           value=""
+           placeholder="comment"
+           class="textbox textbox-comment"
            />
 
 
-    <input type="submit"
-           name="submit"
-           value="Post this"
-           class="button"
-           >
+:   if ( $user  &&  $user.service_name == 'twitter' ) {
+    <label>
+      <input type="checkbox"
+             name="enable_tweet"
+             value="1"
+             />
+      Tweet!
+    </label>
+:   }
+
+
+    <div>
+      <input type="submit"
+             name="submit"
+             value="Post this"
+             class="button"
+             >
+    </div>
   </form>
 </div>
 
@@ -32,6 +65,7 @@
     <thead>
       <tr>
         <th>code</th>
+        <th>user</th>
         <th>detail</th>
       </tr>
     </thead>
@@ -40,7 +74,14 @@
 :   while $lines.next() -> $line {
       <tr>
         <td>
-          <code><: $line.code :></code>
+          <code><: $line.line :></code>
+        </td>
+
+        <td>
+:     my $u = $coll_user.find_one({ _id => $line.user });
+          <a href="<: uri_for('/user/'); $u._id :>">
+             <: $u.username :>
+          </a>
         </td>
 
         <td>

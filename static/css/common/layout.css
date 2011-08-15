@@ -2,7 +2,15 @@
     width: 100%;
 }
 
-#form input.textbox-code {
+#form input.textbox-username {
+    padding: 5px 5px;
+    display: block;
+    width: 20%;
+    font-size: 150%;
+    font-family: monospace;
+}
+
+#form input.textbox-line {
     padding: 5px 5px;
     display: block;
     width: 98%;
@@ -10,6 +18,13 @@
     font-family: monospace;
 }
 
+#form input.textbox-comment {
+    padding: 5px 5px;
+    display: block;
+    width: 98%;
+    font-size: 150%;
+    font-family: monospace;
+}
 
 
 

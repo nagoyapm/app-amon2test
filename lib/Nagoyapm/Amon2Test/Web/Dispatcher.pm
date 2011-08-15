@@ -27,8 +27,9 @@ get '/' => sub {
 
 
     $vars = +{
-        user  => $user,
-        lines => $itr_line,
+        user      => $user,
+        lines     => $itr_line,
+        coll_user => $db->user,
     };
 
     $c->render('index.tx', $vars);
@@ -36,22 +37,70 @@ get '/' => sub {
 
 post '/' => sub {
     my ($c) = @_;
-    my ($req, $db) = ($c->req, $c->db);
+    my ($req, $db, $ss) = ($c->req, $c->db, $c->session);
 
-    my $id_ins;
-    my $o = $db->line->query({}, { id => 0 })->sort({ id => -1 })->limit(1)->next;
-    $id_ins = ( $o->{id} || 0 ) + 1;
+    my $access_token = $ss->get('access_token');
+
+    my $username     = $req->param('username');
+    my $line         = $req->param('line');
+    my $comment      = $req->param('comment');
+    my $enable_tweet = $req->param('enable_tweet') || 0;
 
 
-    my $code = $req->param('code');
+    #
+    my ($user, $user_oid);
+    if ( defined $access_token ) {
+        $user = $db->user->find_one({ token => $access_token->token });
+    };
 
-    my $data = +{
-        id         => $id_ins,
-        code       => $code,
+    if ( defined $user ) {
+        $user_oid = $user->{_id};
+    }
+    else {
+        $user = {
+            service_name => '',
+            username     => $username,
+        };
+
+        $user_oid = $db->user->insert({
+            username => $username,
+        });
+    }
+
+
+    #
+    my $line_data = +{
+        user       => $user_oid,
+        line       => $line,
+        comment    => $comment,
         created_at => localtime->epoch,
     };
 
-    my $ins = $db->line->insert($data);
+    my $line_oid = $db->line->insert($line_data);
+
+
+    if ( $enable_tweet  &&  $user->{service_name} eq 'twitter' ) {
+        my $status_text = encode_utf8( 'てすとてすと．' );
+        $status_text .= ' #test';
+
+        my $oauth_consumer = new_oauth_consumer($c->config->{'OAuth'}, 'twitter');
+        my $res = $oauth_consumer->request(
+            method => 'POST',
+            url    => 'http://api.twitter.com/1/statuses/update.json',
+            token  => $access_token,
+            params => {
+                status => $status_text,
+            },
+        );
+
+        # 200
+        if ( $res->code eq '200' ) {
+        }
+        # non-200
+        else {
+        }
+    }
+
 
     $c->redirect('/');
     #$c->render('index.tx');
