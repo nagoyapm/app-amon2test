@@ -18,7 +18,8 @@ get '/' => sub {
     my $itr_line = $db->line->find->sort({ created_at => -1, id => -1 })->limit(20);
 
 
-    my $user = +{};
+    #
+    my $user;
     if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
         $user = $db->user->find_one({ token => $access_token->token });
     };
@@ -152,10 +153,7 @@ get '/oauth/callback' => sub {
             verifier => $verifier,
         );
 
-        my $ss_access_token = $session->get('access_token') || +{};
-        $ss_access_token->{$auth_type} = $access_token;
-
-        $session->set( access_token => $ss_access_token );
+        $session->set( access_token => $access_token );
         $session->remove('request_token');
         $session->remove('auth_type');
 
@@ -211,10 +209,14 @@ get '/logout' => sub {
 
     my $access_token = $ss->get('access_token');
 
-    $db->user->update(
-        { token => $access_token->token },
-        { token => '' },
-    );
+    if ( defined $access_token ) {
+        $db->user->update(
+            { token => $access_token->token },
+            { '$set' => { token => '' } },
+        );
+
+        $ss->remove('access_token');
+    }
 
     $c->redirect( $req->base );
 };
