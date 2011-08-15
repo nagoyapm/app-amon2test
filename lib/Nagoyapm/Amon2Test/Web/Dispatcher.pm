@@ -14,16 +14,14 @@ get '/' => sub {
     my ($req, $db) = ($c->req, $c->db);
     my $vars = +{};
 
-
-    my $itr_line = $db->line->find->sort({ created_at => -1, id => -1 })->limit(20);
-
-
     #
     my $user;
     if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
         $user = $db->user->find_one({ token => $access_token->token });
     };
 
+    #
+    my $itr_line = $db->line->find->sort({ created_at => -1, id => -1 })->limit(50);
 
 
     $vars = +{
