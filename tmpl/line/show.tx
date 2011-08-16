@@ -1,41 +1,67 @@
 : cascade _base
 
 : around content {
+<h1>line / <: $line_data._id :></h1>
 
-<div>
-  <h3>code</h3>
-
-  <pre>
-    <: $line_data.line :>
-  </pre>
-
-
-  <h3>comment</h3>
+<div class="span-20">
 
   <div>
-    <: $line_data.comment :>
+    <h2>code</h2>
+
+    <pre>
+      <: $line_data.line :>
+    </pre>
   </div>
 
 
-  <h3>user</h3>
-
   <div>
-    <: $user_data.username :>
+    <h2>comment</h2>
 
-    &nbsp;
-    <a href="<: uri_for('/user/'); $user_data._id :>">more this user's line...</a>
+    <div>
+      <: $line_data.comment :>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="span-4 last">
+  <div>
+    <h3>posted by</h3>
+
+    <p>
+:   given $user_data.service_name {
+:     when 'twitter' {
+      <img src="http://api.twitter.com/1/users/profile_image/<: $user_data.username :>.json?size=mini"
+           alt="<: $user_data.username :>" title="<: $user_data.username :>"
+           />
+:     }
+:     default {
+      <img src="<: uri_for('/static/img/sozai/icon.guest.png') :>"
+           alt="<: $user_data.username :>" title="<: $user_data.username :>"
+           />
+:     }
+:   }
+
+      <a href="<: uri_for('/user/'); $user_data._id :>"><: $user_data.username :></a>
+    </p>
   </div>
 </div>
 
 
-<div>
-  <h3>url</h3>
+<hr />
+<div class="clear">
 
-  <input type="text"
-         class="textbox"
-         readonly="readonly"
-         value="<: $uri :>"
-         />
+  <h2>url</h2>
+
+  <p><code><: $uri :></code></p>
+
+:#  <input type="text"
+:#         class="textbox"
+:#         readonly="readonly"
+:#         value="<: $uri :>"
+:#         />
+
 </div>
 
 
