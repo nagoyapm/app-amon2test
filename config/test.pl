@@ -19,8 +19,8 @@
 
     'OAuth' => {
         twitter => {
-            consumer_key       => '9EQPWHRr05mccgdEyGcOg',
-            consumer_secret    => 'D9rbn2k247F7nuA23qIrQteMML3Uys8aPcMwUJQcVc',
+            consumer_key       => '',
+            consumer_secret    => '',
             request_token_path => 'https://api.twitter.com/oauth/request_token',
             access_token_path  => 'https://api.twitter.com/oauth/access_token',
             authorize_path     => 'https://api.twitter.com/oauth/authorize',
