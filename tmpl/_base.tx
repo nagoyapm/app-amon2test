@@ -38,7 +38,7 @@
 
   <a href="<: uri_for('/') :>logout">ログアウト</a>
 : } else {
-  <a href="<: uri_for('/') :>oauth/login/twitter">Twitterでログイン</a>
+  <a href="<: uri_for('/') :>oauth/login/twitter"><img src="<: uri_for('/static/img/sozai/sign-in-with-twitter-d.png') :>" width="151" height="24" alt="Sign in with Twitter" title="Sign in with Twitter" /></a>
 : }  # /if ( $user != nil )
 </div>
 
