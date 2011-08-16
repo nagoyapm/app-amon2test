@@ -15,9 +15,9 @@ get '/' => sub {
     my $vars = +{};
 
     #
-    my $user;
+    my $my;
     if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
-        $user = $db->user->find_one({ token => $access_token->token });
+        $my = $db->user->find_one({ token => $access_token->token });
     };
 
     #
@@ -25,7 +25,7 @@ get '/' => sub {
 
 
     $vars = +{
-        user      => $user,
+        my        => $my,
         lines     => $itr_line,
         coll_user => $db->user,
     };
@@ -46,21 +46,21 @@ post '/' => sub {
 
 
     #
-    my ($user, $user_oid);
+    my ($my, $my_oid);
     if ( defined $access_token ) {
-        $user = $db->user->find_one({ token => $access_token->token });
+        $my = $db->user->find_one({ token => $access_token->token });
     };
 
-    if ( defined $user ) {
-        $user_oid = $user->{_id};
+    if ( defined $my ) {
+        $my_oid = $my->{_id};
     }
     else {
-        $user = {
+        $my = {
             service_name => '',
             username     => $username,
         };
 
-        $user_oid = $db->user->insert({
+        $my_oid = $db->user->insert({
             username => $username,
         });
     }
@@ -68,7 +68,7 @@ post '/' => sub {
 
     #
     my $line_data = +{
-        user       => $user_oid,
+        user       => $my_oid,
         line       => $line,
         comment    => $comment,
         created_at => localtime->epoch,
@@ -77,7 +77,7 @@ post '/' => sub {
     my $line_oid = $db->line->insert($line_data);
 
 
-    if ( $enable_tweet  &&  $user->{service_name} eq 'twitter' ) {
+    if ( $enable_tweet  &&  $my->{service_name} eq 'twitter' ) {
         my $status_text = encode_utf8( 'てすとてすと．' );
         $status_text .= ' #test';
 
@@ -110,9 +110,9 @@ get '/line/{id}' => sub {
     my ($req, $db) = ($c->req, $c->db);
 
     #
-    my $user;
+    my $my;
     if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
-        $user = $db->user->find_one({ token => $access_token->token });
+        $my = $db->user->find_one({ token => $access_token->token });
     };
 
     #
@@ -124,7 +124,7 @@ get '/line/{id}' => sub {
 
 
     my $vars = +{
-        user      => $user,
+        my        => $my,
         line_data => $line_data,
         user_data => $user_data,
         uri       => $req->uri,

@@ -33,17 +33,17 @@
         </div>
 
         <div id="account-info">
-: if ( $user != nil ) {
-:   if ( $user.service_name == 'twitter' ) {
-          <a href="<: uri_for('/user/'); $user._id :>"><img src="http://api.twitter.com/1/users/profile_image/<: $user.username :>.json?size=mini" width="24" height="24" /></a>
+: if ( $my != nil ) {
+:   if ( $my.service_name == 'twitter' ) {
+          <a href="<: uri_for('/user/'); $my._id :>"><img src="http://api.twitter.com/1/users/profile_image/<: $my.username :>.json?size=mini" width="24" height="24" /></a>
 :   }
-          <b><a href="<: uri_for('/user/'); $user._id :>"><: $user.username :></a></b>
+          <b><a href="<: uri_for('/user/'); $my._id :>"><: $my.username :></a></b>
 
           &nbsp;|&nbsp;
           <a href="<: uri_for('/') :>logout">logout</a>
 : } else {
           <a href="<: uri_for('/') :>oauth/login/twitter"><img src="<: uri_for('/static/img/sozai/sign-in-with-twitter-d.png') :>" width="151" height="24" alt="Sign in with Twitter" title="Sign in with Twitter" /></a>
-: }  # /if ( $user != nil )
+: }  # /if ( $my != nil )
         </div>
       </div>
 :#    </header>
