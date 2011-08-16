@@ -1,3 +1,106 @@
+body {
+    color: #333;
+}
+
+
+
+
+#header {
+    padding: 5px 0 8px;
+    border-bottom: 1px solid #c0c0c0;
+    background: #d8d8d8;
+    font-weight: normal;
+}
+#header .container {
+    position: relative;
+}
+
+#logo {
+    padding: 5px 0;
+    font-size: 200%;
+    font-weight: bolder;
+}
+#logo a:link,
+#logo a:visited {
+    color: #333;
+    text-decoration: none;
+}
+#logo a:hover {
+    color: #09f;
+}
+
+#account-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: normal;
+}
+
+#account-info a {
+    color: #333;
+    text-decoration: none;
+}
+#account-info a:hover { color: #09f; }
+
+
+#account-info img {
+    margin-right: 3px;
+}
+
+
+
+#navi {
+    margin-bottom: 10px;
+    padding: 0;
+    border-bottom: 1px solid #c0c0c0;
+    background: #e8e8e8;
+}
+#navi .container {
+    padding: 0;
+    border-right: 1px solid #c0c0c0;
+    border-left: 1px solid #c0c0c0;
+}
+
+#navi ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#navi ul li {
+    padding: 0;
+    border-right: 1px solid #c0c0c0;
+    float: left;
+    width: 120px;
+}
+
+#navi ul li a {
+    padding: 5px 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-family: monospace;
+    font-size: 140%;
+    font-weight: bolder;
+    text-align: center;
+    text-decoration: none;
+}
+#navi ul li a:hover {
+    background: #f3f3f3;
+}
+
+
+#footer {
+    margin-top: 50px;
+    padding: 5px 0 8px;
+    border-top: 2px solid #c0c0c0;
+    /* background: #d8d8d8; */
+    font-weight: normal;
+}
+
+
+
+
 table {
     border-collapse: collapse;
     width: 100%;

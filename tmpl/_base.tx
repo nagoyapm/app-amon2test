@@ -23,30 +23,63 @@
 : block javascript -> {}
 </head>
 <body<: if ( $bodyID ) { :> class="<: $bodyID :>"<: } :>>
-    <div class="container">
-        <header>
-            <a href="<: uri_for('/') :>">Nagoyapm-Amon2Test</a>
-        </header>
-        <div id="main">
 
-<div>
+  <!-- #header -->
+  <div id="header">
+:#    <header>
+      <div class="container">
+        <div id="logo">
+          <a href="<: uri_for('/') :>">Nagoya.pm @ OSC 2011 Nagoya</a>
+        </div>
+
+        <div id="account-info">
 : if ( $user != nil ) {
 :   if ( $user.service_name == 'twitter' ) {
-  <img src="http://api.twitter.com/1/users/profile_image/<: $user.username :>.json?size=mini" width="24" height="24" />
+          <a href="<: uri_for('/user/'); $user._id :>"><img src="http://api.twitter.com/1/users/profile_image/<: $user.username :>.json?size=mini" width="24" height="24" /></a>
 :   }
-  <b><: $user.username :></b>
+          <b><a href="<: uri_for('/user/'); $user._id :>"><: $user.username :></a></b>
 
-  <a href="<: uri_for('/') :>logout">ログアウト</a>
+          &nbsp;|&nbsp;
+          <a href="<: uri_for('/') :>logout">logout</a>
 : } else {
-  <a href="<: uri_for('/') :>oauth/login/twitter"><img src="<: uri_for('/static/img/sozai/sign-in-with-twitter-d.png') :>" width="151" height="24" alt="Sign in with Twitter" title="Sign in with Twitter" /></a>
+          <a href="<: uri_for('/') :>oauth/login/twitter"><img src="<: uri_for('/static/img/sozai/sign-in-with-twitter-d.png') :>" width="151" height="24" alt="Sign in with Twitter" title="Sign in with Twitter" /></a>
 : }  # /if ( $user != nil )
-</div>
-
-: block content -> {}
         </div>
-        <footer>
-            Powered by <a href="http://amon.64p.org/">Amon2</a>
-        </footer>
+      </div>
+:#    </header>
+  </div>
+  <!-- /#header -->
+
+  <!-- #nvai -->
+  <div id="navi">
+    <div class="container clear">
+      <ul>
+        <li><a href="<: uri_for('/') :>">top</a></li>
+        <li><a href="<: uri_for('/about') :>">about</a></li>
+        <li><a href="<: uri_for('/lines') :>">lines</a></li>
+        <li><a href="<: uri_for('/users') :>">users</a></li>
+      </ul>
     </div>
+  </div>
+  <!-- /#nvai -->
+
+
+  <div id="main">
+    <div class="container">
+: block content -> {}
+    </div>
+  </div>
+
+
+  <!-- #footer -->
+  <div id="footer">
+    <footer>
+      <div class="container">
+        Powered by <a href="http://amon.64p.org/">Amon2</a>
+      </div>
+    </footer>
+  </div>
+  <!-- /#footer -->
+
 </body>
 </html>
