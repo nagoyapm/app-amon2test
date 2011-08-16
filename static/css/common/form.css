@@ -4,6 +4,20 @@ form .textbox {
 }
 
 
+form .textbox-required {
+    border-width: 2px;
+}
+
+form .textbox-optional {
+}
+
+
+
+form .textbox-readonly {
+    color: #666;
+    background: #f0f0f0;
+}
+
 
 form button,
 form .button {
