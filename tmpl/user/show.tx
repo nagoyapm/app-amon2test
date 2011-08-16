@@ -1,0 +1,29 @@
+: cascade _base
+
+
+: around css -> {
+<link rel="stylesheet" href="<: uri_for('/static/css/page/user/show.css') :>" type="text/css" media="screen" />
+: }
+
+
+: around content -> {
+<h1>user / <: $user.username :></h1>
+
+
+
+<div id="lines">
+  <h2><: $user.username :>'s lines</h2>
+
+  <table>
+    <tbody>
+:   while $lines.next() -> $line {
+      <tr>
+        <td class="line">
+          <code><: $line.line :></code>
+        </td>
+      </tr>
+:   }
+    </tbody>
+  </table>
+</div>
+: }

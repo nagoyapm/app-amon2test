@@ -1,0 +1,25 @@
+#lines {
+    margin-bottom: 20px;
+}
+
+
+#lines table .line {
+}
+
+#lines table .user {
+    width: 24px;
+    text-align: center;
+}
+
+#lines table .user .icon {
+    width: 24px;
+    height: 24px;
+    background: #fff;
+}
+#lines table .user .icon img {
+}
+
+
+#lines table .link {
+    width: 3em;
+}

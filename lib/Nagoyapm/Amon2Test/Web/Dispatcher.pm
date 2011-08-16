@@ -135,6 +135,35 @@ get '/line/{id}' => sub {
 };
 
 
+get '/user/{id}' => sub {
+    my ($c, $args) = @_;
+    my ($req, $db, $ss) = ($c->req, $c->db, $c->session);
+
+    #
+    my $my;
+    if ( defined ( my $access_token = $ss->get('access_token') ) ) {
+        $my = $db->user->find_one({ token => $access_token->token });
+    };
+
+    my $user_oid = new_oid( $args->{id} );
+
+    my $user = $db->user->find_one({ _id => $user_oid});
+    unless ( defined $user ) {
+    }
+
+    my $itr_line = $db->line->find({ user => $user_oid })->sort({ created_at => -1 });
+
+
+    my $vars = {
+        my    => $my,
+        user  => $user,
+        lines => $itr_line,
+    };
+
+    $c->render('user/show.tx', $vars);
+};
+
+
 get '/test/lleval' => sub {
     my ($c) = @_;
     $c->render('test/lleval.tx');
