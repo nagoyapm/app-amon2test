@@ -46,6 +46,13 @@
       <a href="<: uri_for('/user/'); $user_data._id :>"><: $user_data.username :></a>
     </p>
   </div>
+
+
+  <div>
+    <iframe src="http://www.facebook.com/plugins/like.php?href=<: $uri :>&layout=button_count"
+            scrolling="no" frameborder="0"
+            style="border:none; width:90px; height:20px"></iframe>
+  </div>
 </div>
 
 
