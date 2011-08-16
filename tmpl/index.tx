@@ -1,5 +1,9 @@
 : cascade _base
 
+: around css -> {
+    <link rel="stylesheet" href="<: uri_for('/static/css/page/index.css') :>" type="text/css" media="screen" />
+: }
+
 
 : around content -> {
 
@@ -7,84 +11,126 @@
   <h2>post your line</h2>
 
   <form action="<: uri_for('/') :>" method="post">
-
-    <input type="text"
-           name="username"
+    <table>
+      <tbody>
+        <!-- nickname -->
+        <tr>
+          <th>nickname</th>
+          <td>
+            <input type="text"
+                   name="username"
 :   if ( $user ) {
-           value="<: $user.username :>"
-           readonly="readonly"
-           disabled="disabled"
+                   value="<: $user.username :>"
+                   readonly="readonly"
+                   class="textbox textbox-required textbox-readonly textbox-username"
 :   } else {
-           value=""
+                   value=""
+                   class="textbox textbox-required textbox-username"
 :   }  # /if ( $user )
-           placeholder="your nickname"
-           class="textbox textbox-username"
-           />
+                   placeholder="your nickname"
+                   />
+          </td>
+        </tr>
 
-    <input type="text"
-           name="line"
-           value=""
-           placeholder="print 'hello, world!'"
-           class="textbox textbox-line"
-           />
+        <!-- line -->
+        <tr>
+          <th>line</th>
+          <td>
+            <input type="text"
+                   name="line"
+                   value=""
+                   placeholder="print 'hello, world!'"
+                   class="textbox textbox-required textbox-line"
+                   />
+          </td>
+        </tr>
 
-    <input type="text"
-           name="comment"
-           value=""
-           placeholder="comment"
-           class="textbox textbox-comment"
-           />
+        <!-- comment -->
+        <tr>
+          <th>comment</th>
+          <td>
+            <input type="text"
+                   name="comment"
+                   value=""
+                   placeholder="comment"
+                   class="textbox textbox-comment"
+                   />
+          </td>
+        </tr>
 
+        <tr>
+          <th>others</th>
+          <td>
 
 :   if ( $user  &&  $user.service_name == 'twitter' ) {
-    <label>
-      <input type="checkbox"
-             name="enable_tweet"
-             value="1"
-             />
-      Tweet!
-    </label>
+            <label>
+              <input type="checkbox"
+                     name="enable_tweet"
+                     value="1"
+                     />
+              Tweet!
+            </label>
 :   }
+          </td>
+        </tr>
 
-
-    <div>
-      <input type="submit"
-             name="submit"
-             value="Post this"
-             class="button"
-             >
-    </div>
+        <tr class="buttons">
+          <td colspan="2">
+            <div>
+              <input type="submit"
+                     name="submit"
+                     value="Post this"
+                     class="button"
+                     />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </form>
 </div>
 
 
-<div>
+<div id="lines">
   <h2>posted lines</h2>
 
   <table>
     <thead>
       <tr>
-        <th>code</th>
-        <th>user</th>
-        <th>detail</th>
+        <th class="user">&nbsp;</th>
+        <th class="line">line</th>
+        <th class="link">detail</th>
       </tr>
     </thead>
 
     <tbody>
 :   while $lines.next() -> $line {
       <tr>
-        <td>
+        <td class="user">
+:     my $u = $coll_user.find_one({ _id => $line.user });
+          <div class="icon">
+            <a href="<: uri_for('/user/'); $u._id :>">
+:     given $u.service_name {
+:       when 'twitter' {
+              <img src="http://api.twitter.com/1/users/profile_image/<: $u.username :>.json?size=mini"
+                   alt="<: $u.username :>" title="<: $u.username :>"
+                   />
+:       }
+:       default {
+              <img src="<: uri_for('/static/img/sozai/icon.guest.png') :>"
+                   alt="<: $u.username :>" title="<: $u.username :>"
+                   />
+:       }
+:     }  # /given $u.service_name
+            </a>
+          </div>
+        </td>
+
+        <td class="line">
           <code><: $line.line :></code>
         </td>
 
-        <td>
-:     my $u = $coll_user.find_one({ _id => $line.user });
-          <a href="<: uri_for('/user/'); $u._id :>">
-             <: $u.username :>
-          </a>
-        </td>
-
-        <td>
+        <td class="link">
           <a href="<: uri_for('/line/'); $line._id :>">detail</a>
         </td>
       </tr>
