@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="<: uri_for('/static/css/page/index.css') :>" type="text/css" media="screen" />
 : }
 
+: around javascript -> {
+    <script type="text/javascript" src="<: uri_for('/static/js/common/base.js') :>" charset="utf-8"></script>
+    <script type="text/javascript" src="<: uri_for('/static/js/page/index.js') :>" charset="utf-8"></script>
+: }
+
 
 : around content -> {
 
@@ -100,6 +105,7 @@
         <th class="user">&nbsp;</th>
         <th class="line">line</th>
         <th class="link">detail</th>
+        <th class="eval">eval</th>
       </tr>
     </thead>
 
@@ -128,10 +134,16 @@
 
         <td class="line">
           <code><: $line.line :></code>
+          <div class="lleval-stdout"></div>
+          <div class="lleval-stderr"></div>
         </td>
 
         <td class="link">
           <a href="<: uri_for('/line/'); $line._id :>">detail</a>
+        </td>
+
+        <td class="eval">
+          <a href="#eval">eval</a>
         </td>
       </tr>
 :   }

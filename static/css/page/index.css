@@ -65,6 +65,25 @@
 
 #lines table .line {
 }
+#lines table .line .code {
+    margin: 5px 0;
+}
+#lines table .line .lleval-stdout {
+    padding: 5px;
+    white-space: pre;
+    display: none;
+    background: #d8ffd8;
+    font-size: 110%;
+    font-family: monospace;
+}
+#lines table .line .lleval-stderr {
+    padding: 5px;
+    white-space: pre;
+    display: none;
+    background: #ffcccc;
+    font-size: 110%;
+    font-family: monospace;
+}
 
 #lines table .user {
     width: 24px;
