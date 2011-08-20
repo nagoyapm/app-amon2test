@@ -196,7 +196,7 @@ any '/oauth/login/{type}' => sub {
     # twitter
     if ( $auth_type eq 'twitter' ) {
         $request_token = $oauth_consumer->get_request_token(
-            callback_url => $oauth_conf->{twitter}{callback_url},
+            callback_url => $req->base . $oauth_conf->{twitter}{callback_url},
         );
     }
     #

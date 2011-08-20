@@ -24,7 +24,7 @@
             request_token_path => 'https://api.twitter.com/oauth/request_token',
             access_token_path  => 'https://api.twitter.com/oauth/access_token',
             authorize_path     => 'https://api.twitter.com/oauth/authorize',
-            callback_url       => 'http://localhost:5000/oauth/callback',
+            callback_url       => 'oauth/callback',
         },
     },
 
