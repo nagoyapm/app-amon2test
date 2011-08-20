@@ -11,6 +11,10 @@
     font-family: monospace;
 }
 
+#form select.select-lang {
+    font-size: 150%;
+}
+
 #form input.textbox-line {
     padding: 5px 5px;
     display: block;
@@ -60,6 +64,14 @@
 
 #lines {
     margin-bottom: 20px;
+}
+
+
+#lines table .lang {
+    width: 3em;
+}
+#lines table .lang .lang_key {
+    display: none;
 }
 
 

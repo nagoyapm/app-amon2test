@@ -42,6 +42,18 @@
           </td>
         </tr>
 
+        <!-- lang -->
+        <tr>
+          <th>lang</th>
+          <td>
+            <select name="lang" class="select-lang">
+:   for $langs -> $lang {
+              <option value="<: $lang.key :>"><: $lang.name :></option>
+:   }
+            </select>
+          </td>
+        </tr>
+
         <!-- line -->
         <tr>
           <th>line</th>
@@ -108,6 +120,7 @@
     <thead>
       <tr>
         <th class="user">&nbsp;</th>
+        <th class="lang">lang</th>
         <th class="line">line</th>
         <th class="link">detail</th>
         <th class="eval">eval</th>
@@ -135,6 +148,11 @@
 :     }  # /given $u.service_name
             </a>
           </div>
+        </td>
+
+        <td class="lang">
+          <: $lang_map[ $line.lang || 'pl' ] || $line.lang || 'perl5' :>
+          <div class="lang_key"><: $line.lang :></:>
         </td>
 
         <td class="line">

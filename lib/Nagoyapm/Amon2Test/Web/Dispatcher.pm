@@ -24,6 +24,7 @@ post '/' => sub {
     my $access_token = $ss->get('access_token');
 
     my $username     = $req->param('username');
+    my $lang         = $req->param('lang')  ||  'perl5';
     my $line         = $req->param('line');
     my $comment      = $req->param('comment');
     my $enable_tweet = $req->param('enable_tweet') || 0;
@@ -63,6 +64,7 @@ post '/' => sub {
     #
     my $line_data = +{
         user       => $my_oid,
+        lang       => $lang,
         line       => $line,
         comment    => $comment,
         created_at => localtime->epoch,
@@ -349,6 +351,14 @@ sub render_top {
         lines     => $itr_line,
         coll_user => $db->user,
     };
+
+    my $lang_map = {};
+    for my $k ( @{ $c->config->{langs} } ) {
+        $lang_map->{$k->{key}} = $k->{name};
+    }
+    $vars->{lang_map} = $lang_map;
+    $vars->{langs}    = $c->config->{langs};
+
 
     unless (defined $params and ref $params eq 'HASH') {
         $params = {};

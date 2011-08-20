@@ -27,4 +27,18 @@
             callback_url       => 'http://localhost:5000/oauth/callback',
         },
     },
+
+
+    langs => [
+        { key => 'pl', name => 'Perl5' },
+        { key => 'p6', name => 'Perl6' },
+        { key => 'js', name => 'JavaScript' },
+        { key => 'coq', name => 'Coq' },
+
+        { key => 'awk', name => 'Awk' },
+        { key => 'c', name => 'C' },
+        { key => 'grass', name => 'Grass' },
+        { key => 'el', name => 'Emacs Lisp' },
+        { key => 'hs', name => 'Haskell' },
+    ],
 };
