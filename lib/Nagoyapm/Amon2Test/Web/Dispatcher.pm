@@ -13,26 +13,7 @@ use Mouse::Util::TypeConstraints;
 
 get '/' => sub {
     my ($c) = @_;
-    my ($req, $db) = ($c->req, $c->db);
-    my $vars = +{};
-
-    #
-    my $my;
-    if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
-        $my = $db->user->find_one({ token => $access_token->token });
-    };
-
-    #
-    my $itr_line = $db->line->find->sort({ created_at => -1, id => -1 })->limit(50);
-
-
-    $vars = +{
-        my        => $my,
-        lines     => $itr_line,
-        coll_user => $db->user,
-    };
-
-    return render_top($c, $vars);
+    return render_top($c);
 };
 
 
@@ -327,8 +308,8 @@ sub is_valid {
     my ($params) = @_;
 
     my $v = Data::Validator->new(
-        name => {isa => 'NotNullStr'},
-        line => {isa => 'NotNullStr'},
+        username => {isa => 'NotNullStr'},
+        line     => {isa => 'NotNullStr'},
     )->with('AllowExtra');
     eval {
         my ($new_params, $extra) = $v->validate(%$params);
@@ -342,13 +323,33 @@ sub is_valid {
 
 sub render_top {
     my ($c, $params) = @_;
+    my ($req, $db) = ($c->req, $c->db);
+    my $vars = +{};
+
+    #
+    my $my;
+    if ( defined ( my $access_token = $c->session->get('access_token') ) ) {
+        $my = $db->user->find_one({ token => $access_token->token });
+    };
+
+    #
+    my $itr_line = $db->line->find->sort({ created_at => -1, id => -1 })->limit(50);
+
+    $vars = +{
+        my        => $my,
+        lines     => $itr_line,
+        coll_user => $db->user,
+    };
+
     unless (defined $params and ref $params eq 'HASH') {
         $params = {};
     }
-    unless (exists($params->{data})) {
-        my $data = [reverse $c->db->foo->find->all];
-        $params->{data} = $data;
+
+    for my $k ( keys %$vars ) {
+        next  if exists $params->{$k};
+        $params->{$k} = $vars->{$k};
     }
+
     return $c->render('index.tx', $params);
 }
 
