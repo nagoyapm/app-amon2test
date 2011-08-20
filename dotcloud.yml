@@ -1,2 +1,4 @@
 www:
  type: perl
+data:
+ type: mongodb
