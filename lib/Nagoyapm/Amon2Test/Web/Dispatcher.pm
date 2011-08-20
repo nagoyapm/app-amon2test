@@ -8,6 +8,8 @@ use Time::Piece;
 use JSON;
 use Encode;
 use Data::Dumper;
+use Data::Validator;
+use Mouse::Util::TypeConstraints;
 
 get '/' => sub {
     my ($c) = @_;
@@ -319,14 +321,21 @@ get '/logout' => sub {
 
 
 
+subtype 'NotNullStr', as 'Str', where { not($_ eq q()) }, message { "This form not allowed empty" };
 
 sub is_valid {
     my ($params) = @_;
-    my $required = [qw(username line)];
-    foreach my $name (@$required) {
-        unless (exists($params->{$name}) and not($params->{$name} eq q())) {
-            return 0;
-        }
+
+    my $v = Data::Validator->new(
+        name => {isa => 'NotNullStr'},
+        line => {isa => 'NotNullStr'},
+    )->with('AllowExtra');
+    eval {
+        my ($new_params, $extra) = $v->validate(%$params);
+    };
+    if ($@) {
+        # error
+        return 0;
     }
     return 1;
 }
