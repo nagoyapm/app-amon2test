@@ -19,14 +19,14 @@
           <td>
             <input type="text"
                    name="username"
-:   if ( $user ) {
-                   value="<: $user.username :>"
+:   if ( $my ) {
+                   value="<: $my.username :>"
                    readonly="readonly"
                    class="textbox textbox-required textbox-readonly textbox-username"
 :   } else {
                    value=""
                    class="textbox textbox-required textbox-username"
-:   }  # /if ( $user )
+:   }  # /if ( $my )
                    placeholder="your nickname"
                    />
           </td>
@@ -62,7 +62,7 @@
           <th>others</th>
           <td>
 
-:   if ( $user  &&  $user.service_name == 'twitter' ) {
+:   if ( $my  &&  $my.service_name == 'twitter' ) {
             <label>
               <input type="checkbox"
                      name="enable_tweet"
