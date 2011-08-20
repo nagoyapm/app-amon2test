@@ -2,6 +2,8 @@ package Nagoyapm::Amon2Test::Web::Dispatcher;
 use strict;
 use warnings;
 use Amon2::Web::Dispatcher::Lite;
+use Data::Validator;
+use Mouse::Util::TypeConstraints;
 
 get '/' => sub {
     my ($c) = @_;
@@ -24,14 +26,23 @@ post '/' => sub {
     # return render_top($c, {dump => $dump});
 };
 
+subtype 'NotNullStr', as 'Str', where { not($_ eq q()) }, message { "This form not allowed empty" };
+
 sub is_valid {
     my ($params) = @_;
-    my $required = [qw(name line)];
-    foreach my $name (@$required) {
-        unless (exists($params->{$name}) and not($params->{$name} eq q())) {
-            return 0;
-        }
+
+    my $v = Data::Validator->new(
+        name => {isa => 'NotNullStr'},
+        line => {isa => 'NotNullStr'},
+    )->with('AllowExtra');
+    eval {
+        my ($new_params, $extra) = $v->validate(%$params);
+    };
+    if ($@) {
+        # error
+        return 0;
     }
+
     return 1;
 }
 
