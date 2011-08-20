@@ -15,6 +15,7 @@ WriteMakefile(
         'OAuth::Lite'                     => '0',
         'HTML::FillInForm::Lite'          => '1.09',     # for Amon2::Plugin::HTML::FillInFormLite
         'Data::Validator'                 => '0.08',
+        'Smart::Args'                     => '0',
         'LWP::Protocol::https'            => '0',
     },
     MIN_PERL_VERSION => '5.008001',
