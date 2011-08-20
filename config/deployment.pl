@@ -1,9 +1,9 @@
 +{
     'MongoDB' => {
-        host     => 'localhost',
-        port     => '27017',
-        username => '',
-        password => '',
+        host     => '95b15d13.dotcloud.com',
+        port     => '13639',
+        username => 'root',
+        password => 'qEjc7VoqYRs4aEKtgcJg',
         database => 'osc2011nagoya',
     },
 
