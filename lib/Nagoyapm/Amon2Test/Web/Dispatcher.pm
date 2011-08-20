@@ -72,8 +72,17 @@ post '/' => sub {
 
 
     if ( $enable_tweet  &&  $my->{service_name} eq 'twitter' ) {
-        my $status_text = encode_utf8( 'てすとてすと．' );
-        $status_text .= ' #test';
+        my $base_message = encode_utf8(
+            $comment ne '' ? $comment : 'new line!'
+        );
+
+        my $line_url = sprintf '%s/line/%s', $req->base, $line_oid;
+
+        my $hashtags = join ' ', map {
+            '#' . $_;
+        } qw/ oscnagoya nagoyapm /;
+
+        my $status_text = "${base_message} ${line_url} ${hashtags}";
 
         my $oauth_consumer = new_oauth_consumer($c->config->{'OAuth'}, 'twitter');
         my $res = $oauth_consumer->request(
