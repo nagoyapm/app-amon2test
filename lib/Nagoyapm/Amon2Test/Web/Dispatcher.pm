@@ -78,7 +78,7 @@ post '/' => sub {
             $comment ne '' ? $comment : 'new line!'
         );
 
-        my $line_url = sprintf '%s/line/%s', $req->base, $line_oid;
+        my $line_url = sprintf '%sline/%s', $req->base, $line_oid;
 
         my $hashtags = join ' ', map {
             '#' . $_;
