@@ -68,7 +68,7 @@
 
 
 #lines table .lang {
-    width: 3em;
+    width: auto;
 }
 #lines table .lang .lang_key {
     display: none;
@@ -76,6 +76,8 @@
 
 
 #lines table .line {
+    width: 680px;
+    overflow: hidden;
 }
 #lines table .line .code {
     margin: 5px 0;
