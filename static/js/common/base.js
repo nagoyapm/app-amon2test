@@ -12,7 +12,7 @@ function lleval (code, lang, cb, cb_err) {
     var target_url = 'http://api.dan.co.jp/lleval.cgi';
     if ( lang == 'coq' ) {
         ajax_request_type = 'jsonp';
-        target_url = 'http://proofcafe.co.cc/cgi-bin/coqtop/index.cgi';
+        target_url = 'http://proofcafe.org/cgi-bin/coqtop/index.cgi';
 
         if ( typeof cb == 'function' ) {
             window.__lleval_callback = cb;
