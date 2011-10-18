@@ -5,7 +5,7 @@ WriteMakefile(
     AUTHOR        => 'Some Person <person@example.com>',
     VERSION_FROM  => 'lib/Nagoyapm/Amon2Test.pm',
     PREREQ_PM     => {
-        'Amon2'                           => '2.49',
+        'Amon2'                           => '3.11',
         'Text::Xslate'                    => '1.1005',
         'Text::Xslate::Bridge::TT2Like'   => '0.00008',
         'Plack::Middleware::ReverseProxy' => '0.09',
@@ -17,6 +17,7 @@ WriteMakefile(
         'Data::Validator'                 => '0.08',
         'Smart::Args'                     => '0',
         'LWP::Protocol::https'            => '0',
+        'HTTP::Session',                  => '0.44',
     },
     MIN_PERL_VERSION => '5.008001',
     (-d 'xt' and $ENV{AUTOMATED_TESTING} || $ENV{RELEASE_TESTING}) ? (
